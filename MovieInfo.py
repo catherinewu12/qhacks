@@ -4,6 +4,28 @@ from bs4 import BeautifulSoup as bs
 #page = requests.get("https://www.imdb.com/title/tt0111161/")
 #soup = bs(page.content, 'html.parser')
 
+def convertMovieNameToSearch(name):
+    base = "https://www.google.com/search?q=imdb+"
+    terms = name.replace(' ', '+')
+    return base+terms
+
+
+
+def getLink(name):
+    searchUrl = convertMovieNameToSearch(name)
+    print(searchUrl)
+    page = requests.get(searchUrl)
+    soup = bs(page.content, 'html.parser')
+    h3 = soup.find('h3', attrs={'class':'r'})
+    linkDatum = h3.find('a')
+    link = linkDatum.attrs['href'][7:]
+    link = link[:37]
+    return link
+
+def returnDataFromName(name):
+    m = Movie(getLink(name))
+    return [m.get_character_list(), m.get_actors()]
+
 
 
 class Movie:
@@ -36,19 +58,19 @@ class Movie:
         # try:
         self.characterTds = self.full_cast_soup.findAll('td', attrs={'class':'character'})
         for character in self.characterTds:
-            #print(character)
             children = character.findChildren("a")
             for child in children:
-                self.chars.append(child.contents)
-
-            #     self.chars.append()
-            #     start = character.index('">')
-            #     end = character.index("</a>")
-            #     self.chars.append(character[start:end])
-        # except:
-        #     print('Could not find characters!')
-        #     self.characters = None
+                self.chars.append(child.contents[0])
         return self.chars
+
+    def get_actors(self):
+        self.actors = []
+        actorTable = self.full_cast_soup.find('table', attrs={
+            'class': 'cast_list'})
+        actorImgs = actorTable.findAll('img', attrs={'class':'loadlate'})
+        for actor in actorImgs:
+            self.actors.append(actor.attrs['title'])
+        return self.actors
 
     def output_details(self):
         details = "Title: {}, Year: {}, Rating: {}".format(self.title, self.yr, self.rating)
@@ -86,13 +108,13 @@ for x in range(1270767, 1270797):
 
 '''
 
-url = r"https://www.imdb.com/title/tt2527336/"
-url2 = r"https://www.imdb.com/title/tt1201607/"
-
-m = Movie(url2)
-print(m.output_details())
-#m.get_character_list()
-print(m.get_character_list())
+# url = r"https://www.imdb.com/title/tt2527336/"
+# url2 = r"https://www.imdb.com/title/tt1201607/"
+#
+# m = Movie(url2)
+# print(m.output_details())
+# print(m.get_character_list())
+# print(m.get_actors())
 
 
 '''
@@ -109,3 +131,14 @@ for x in range(1270767, 1270797):
         print('woops')
 
 '''
+'''
+searchWords = 'harry potter'
+url = getLink(searchWords)
+print(url)
+m = Movie(url)
+print(m.get_actors())
+print(m.get_character_list())
+'''
+
+for x in returnDataFromName('harry potter deathly'):
+    print(x)
