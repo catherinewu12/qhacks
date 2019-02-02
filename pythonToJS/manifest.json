@@ -1,5 +1,5 @@
 {
-"name": "hi friends",
+"name": "Access Python",
 "version": "1.0",
 "manifest_version": 2,
 "author": "us",
@@ -9,12 +9,11 @@
 		"js": ["content.js"]
 	}
 ],
-
 "permissions": ["tabs"],
 "browser_action": {
 	"default_icon": "icon.png",
 	"default_popup": "popup.html",
-	"default_title": "spoiler alert"
+	"default_title": "Access Python"
 	}
 
 }

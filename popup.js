@@ -3,13 +3,24 @@ document.addEventListener('DOMContentLoaded', function() {
 		//onclick, false)
 
 	function onclick() {
+		//const movie = document.getElementById('txt').value;
 		chrome.tabs.query({currentWindow: true, active: true},
 		function(tabs) {
+			//get the string value of the input
+			let x = document.getElementById("movie")
+			let inputText = x.value
 
-			chrome.tabs.sendMessage(tabs[0].id, "Blocking Spoilers")
+			//send the input string to the content.js 
+			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, 
+				setCount)
 		})
 	}
 
-}, false)
+	function setCount(res) {
+		const div = document.createElement('div')
 
-		
+		div.textContent = `${res.count} occurrences`
+		document.body.appendChild(div)
+	
+	}
+}, false)
