@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-	//document.querySelector('button').addEventListener('click',
-		//onclick, false)
+	document.querySelector('button').addEventListener('click',
+		onclick, false)
 
 	function onclick() {
 		//const movie = document.getElementById('txt').value;
