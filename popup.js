@@ -4,11 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	function onclick() {
 		//const movie = document.getElementById('txt').value;
-		chrome.tabs.query({currentWindow: true, active: true},
-		function(tabs) {
+		chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
+            chrome.storage.sync.get('keyword', function(data) {
+                keyword = data.keyword;
+                keyword.push(inputText);
+                console.log(keyword);
+                chrome.storage.sync.set({keyword: keyword}, function() {});
+            });
 
 			//send the input string to the content.js 
 			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, 

@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({keyword: 'bear'}, function() {
-        console.log("The keyword is bear.");
+    chrome.storage.sync.set({keyword: []}, function() {
+        console.log("The keyword is an array.");
     });
 });
