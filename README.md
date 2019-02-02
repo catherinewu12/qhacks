@@ -1,4 +1,4 @@
-# qhacks 2019
+# QHacks 2019
 # Chrome Extension Project 
 This extension accepts user input to prevent spoilers from appearing on webpages while on Chrome.
 
