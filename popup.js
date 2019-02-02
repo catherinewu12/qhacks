@@ -23,10 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 	}
 
-	function setCount() {
+	function setCount(res) {
 		const div = document.createElement('div')
+		var check = res.count
+		if (check > 2){
 		div.textContent = `Spoilers Blocked!`
 		document.body.appendChild(div)
+	}
 	};
 
     // Add stored list of keywords to popup.html
