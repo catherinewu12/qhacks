@@ -23,22 +23,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 	}
 
-	function setCount(res) {
+	function setCount() {
 		const div = document.createElement('div')
-		let num = res.count
-		div.textContent = `${num} occurrences`
+		div.textContent = `Spoilers Blocked!`
 		document.body.appendChild(div)
-	
-	}
+	};
 
     // Add stored list of keywords to popup.html
 	var keyword_list = document.getElementById("keyword_list");
     function updateList(keyword) {
         let div = document.createElement('div');
-        let text = document.createElement('p');
-        text.textContent = keyword;
-        text.classList.add('currentBlock');
-        div.appendChild(text);
+        div.textContent = keyword;
         /*div.addEventListener('click', function() {});*/
         keyword_list.appendChild(div);
     }
