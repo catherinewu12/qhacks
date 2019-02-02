@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	function setCount(res) {
 		const div = document.createElement('div')
-
-		div.textContent = `${res.count} occurrences`
+		let num = res.count
+		div.textContent = `${num} occurrences`
 		document.body.appendChild(div)
 	
 	}
