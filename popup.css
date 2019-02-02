@@ -1,0 +1,35 @@
+#content {
+    height: 300px;
+    width: 500px;
+}
+
+#right {
+    width: 50%;
+    position: fixed;
+    left: 50%;
+    top: 0px;
+}
+
+#left {
+    width: 50%;
+    position: fixed;
+    top: 0px;
+}
+
+#keyword_list {
+    position: fixed;
+    left: 30px;
+}
+
+.currentBlock {
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.currentBlock:hover {
+    color: red;
+    text-decoration: line-through;
+    font-size: 20px;
+}
