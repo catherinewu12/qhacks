@@ -27,16 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		const div = document.createElement('div')
 		div.textContent = `Spoilers Blocked!`
 		document.body.appendChild(div)
-	
-
-			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, function(res) {
-                const div = document.createElement('div');
-                let num = res.count;
-                div.textContent = `${num} occurrences`;
-                document.body.appendChild(div);
-                updateList(inputText);
-	        });
-	    };
+	};
 
     // Add stored list of keywords to popup.html
 	var keyword_list = document.getElementById("keyword_list");
