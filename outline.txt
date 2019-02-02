@@ -1,0 +1,8 @@
+spoiler alert blocker
+chrome extension
+-javascript
+-code to replace words
+
+when user inputs their thing to avoid,
+search for keywords and images to avoid.
+webscrape imdb for actors and characters and all that stuff
