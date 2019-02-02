@@ -18,17 +18,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
 			//send the input string to the content.js 
-			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, 
-				setCount)
-		})
-	}
-
-	function setCount(res) {
-		const div = document.createElement('div')
-		let num = res.count
-		div.textContent = `${num} occurrences`
-		document.body.appendChild(div)
-	
+			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, function(res) {
+                const div = document.createElement('div');
+                let num = res.count;
+                div.textContent = `${num} occurrences`;
+                document.body.appendChild(div);
+                updateList(inputText);
+	        });
+	    });
 	}
 
     // Add stored list of keywords to popup.html
