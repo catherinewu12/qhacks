@@ -1,0 +1,17 @@
+{
+"name": "hi friends",
+"version": "1.0",
+"manifest_version": 2,
+"authors": "us",
+"content_scripts": [
+	{
+		"matches": ["<google.com>"]
+	}
+],
+
+"chrome_url_overrides" : {
+  "newtab": "newtab.html"
+ },
+
+ "permissions": ["activeTab"]
+}
