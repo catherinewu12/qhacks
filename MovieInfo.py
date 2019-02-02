@@ -36,19 +36,19 @@ class Movie:
         # try:
         self.characterTds = self.full_cast_soup.findAll('td', attrs={'class':'character'})
         for character in self.characterTds:
-            #print(character)
             children = character.findChildren("a")
             for child in children:
-                self.chars.append(child.contents)
-
-            #     self.chars.append()
-            #     start = character.index('">')
-            #     end = character.index("</a>")
-            #     self.chars.append(character[start:end])
-        # except:
-        #     print('Could not find characters!')
-        #     self.characters = None
+                self.chars.append(child.contents[0])
         return self.chars
+
+    def get_actors(self):
+        self.actors = []
+        actorTable = self.full_cast_soup.find('table', attrs={
+            'class': 'cast_list'})
+        actorImgs = actorTable.findAll('img', attrs={'class':'loadlate'})
+        for actor in actorImgs:
+            self.actors.append(actor.attrs['title'])
+        return self.actors
 
     def output_details(self):
         details = "Title: {}, Year: {}, Rating: {}".format(self.title, self.yr, self.rating)
@@ -91,8 +91,8 @@ url2 = r"https://www.imdb.com/title/tt1201607/"
 
 m = Movie(url2)
 print(m.output_details())
-#m.get_character_list()
 print(m.get_character_list())
+print(m.get_actors())
 
 
 '''
