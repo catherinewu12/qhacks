@@ -35,7 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	var keyword_list = document.getElementById("keyword_list");
     function updateList(keyword) {
         let div = document.createElement('div');
-        div.textContent = keyword;
+        let text = document.createElement('p');
+        text.textContent = keyword;
+        text.classList.add('currentBlock');
+        div.appendChild(text);
         /*div.addEventListener('click', function() {});*/
         keyword_list.appendChild(div);
     }
