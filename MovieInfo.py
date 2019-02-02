@@ -90,55 +90,6 @@ def number_to_url(num):
     url = "https://www.imdb.com/title/tt"+ newNum + "/"
     return url
 
-movies = []
-
-'''
-for x in range(1270767, 1270797):
-    try:
-        url = number_to_url(x)
-        #print('trying:')
-        print(url)
-        m = Movie(url)
-        #print('made movie')
-        print(m.output_details())
-        movies.append(m)
-    except:
-        #print('Failed: {}'.format(str(x)))
-        pass
-
-'''
-
-# url = r"https://www.imdb.com/title/tt2527336/"
-# url2 = r"https://www.imdb.com/title/tt1201607/"
-#
-# m = Movie(url2)
-# print(m.output_details())
-# print(m.get_character_list())
-# print(m.get_actors())
-
-
-'''
-missingUrls = []
-
-for x in range(1270767, 1270797):
-    try:
-        url = number_to_url(x)
-        request = requests.get(url)
-        if request.status_code != 200:
-            missingUrls.append(url)
-            print(url)
-    except:
-        print('woops')
-
-'''
-'''
-searchWords = 'harry potter'
-url = getLink(searchWords)
-print(url)
-m = Movie(url)
-print(m.get_actors())
-print(m.get_character_list())
-'''
 
 for x in returnDataFromName('harry potter deathly'):
     print(x)
