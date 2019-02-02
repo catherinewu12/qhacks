@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
+
+			// add input to storage
             chrome.storage.sync.get('keyword', function(data) {
                 keyword = data.keyword;
                 keyword.push(inputText);
@@ -28,4 +30,20 @@ document.addEventListener('DOMContentLoaded', function() {
 		document.body.appendChild(div)
 	
 	}
+
+    // Add stored list of keywords to popup.html
+	var keyword_list = document.getElementById("keyword_list");
+    function updateList(keyword) {
+        let div = document.createElement('div');
+        div.textContent = keyword;
+        /*div.addEventListener('click', function() {});*/
+        keyword_list.appendChild(div);
+    }
+    chrome.storage.sync.get('keyword', function(data) {
+        keyword = data.keyword;
+        for (var x = 0; x < keyword.length; x++){
+            updateList(keyword[x]);
+        }
+    });
+
 }, false)
