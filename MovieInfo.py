@@ -4,6 +4,28 @@ from bs4 import BeautifulSoup as bs
 #page = requests.get("https://www.imdb.com/title/tt0111161/")
 #soup = bs(page.content, 'html.parser')
 
+def convertMovieNameToSearch(name):
+    base = "https://www.google.com/search?q=imdb+"
+    terms = name.replace(' ', '+')
+    return base+terms
+
+
+
+def getLink(name):
+    searchUrl = convertMovieNameToSearch(name)
+    print(searchUrl)
+    page = requests.get(searchUrl)
+    soup = bs(page.content, 'html.parser')
+    h3 = soup.find('h3', attrs={'class':'r'})
+    linkDatum = h3.find('a')
+    link = linkDatum.attrs['href'][7:]
+    link = link[:37]
+    return link
+
+def returnDataFromName(name):
+    m = Movie(getLink(name))
+    return [m.get_character_list(), m.get_actors()]
+
 
 
 class Movie:
@@ -86,13 +108,13 @@ for x in range(1270767, 1270797):
 
 '''
 
-url = r"https://www.imdb.com/title/tt2527336/"
-url2 = r"https://www.imdb.com/title/tt1201607/"
-
-m = Movie(url2)
-print(m.output_details())
-print(m.get_character_list())
-print(m.get_actors())
+# url = r"https://www.imdb.com/title/tt2527336/"
+# url2 = r"https://www.imdb.com/title/tt1201607/"
+#
+# m = Movie(url2)
+# print(m.output_details())
+# print(m.get_character_list())
+# print(m.get_actors())
 
 
 '''
@@ -109,3 +131,14 @@ for x in range(1270767, 1270797):
         print('woops')
 
 '''
+'''
+searchWords = 'harry potter'
+url = getLink(searchWords)
+print(url)
+m = Movie(url)
+print(m.get_actors())
+print(m.get_character_list())
+'''
+
+for x in returnDataFromName('harry potter deathly'):
+    print(x)
