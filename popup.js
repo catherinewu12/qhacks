@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	function onclick() {
 		chrome.tabs.query({currentWindow: true, active: true},
 		function(tabs) {
-			chrome.tabs.sendMessage(tabs[0].id, 'BLocking Spoilers')
+			chrome.tabs.sendMessage(tabs[0].id, "Blocking Spoilers")
 		})
 	}
+
 }, false)
