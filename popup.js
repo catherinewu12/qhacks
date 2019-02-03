@@ -23,33 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 			updateList(inputText);
 
-			//chars = await loadLinkAndChars(inputText)
-            //console.log(chars)
-
-            // console.log(link)
-            //
-            // console.log("link var then hardcoded one:")
-            // console.log(link)
-            // console.log("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast")
-            // console.log("Characters: ")
-            // console.log(characters)
-			//send the input string to the content.js
-			//chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
-				//setCount)
 		})
 	}
-
-	//send the input string to the content.js
-	//chrome.runtime.sendMessage({inputText: keyword[0]}, setCount)
-
-	function setCount(res) {
-		const div = document.createElement('div')
-		var check = res.count
-		if (check > 2){
-		    div.textContent = `Spoilers Blocked!`
-		    document.body.appendChild(div)
-	    }
-	};
 
 
 	async function getImdbLink(keyWords){
@@ -116,6 +91,6 @@ function saveStorage() {
 
 function blockSpoilers() {
     chrome.tabs.getCurrent(function(tabs) {
-        chrome.tabs.sendMessage(tabs, {method: "blockSpoilers", inputText: spoilList}, setCount);
+        chrome.tabs.sendMessage(tabs, {method: "blockSpoilers", inputText: spoilList});
     });
 }
