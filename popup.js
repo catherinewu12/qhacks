@@ -1,3 +1,5 @@
+var spoilList;
+
 document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('button').addEventListener('click', onclick, false);
 
@@ -85,3 +87,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 }, false)
+
+// FUNCTIONS
+getStorage() {
+    chrome.storage.sync.get('keyword', function(data) {
+        spoilList = data.keyword;
+    });
+}
+
+saveStorage() {
+    chrome.storage.sync.set({keyword: spoilList}, function() {});
+}
+
+blockSpoilers() {
+    chrome.tabs.getCurrent(function(tabs) {
+        chrome.tabs.sendMessage(tabs, {method: "blockSpoilers", inputText: spoilList}, setCount);
+    });
+}
