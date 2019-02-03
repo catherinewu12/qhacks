@@ -11,7 +11,7 @@ Now in a new webpage, there should be an icon prompt which allows input of a mov
 all instances of spoilers for that movie should be hidden from your internet adventures!
 
 #### GUI: 
-(res/GUI.PNG "The interface for the Chrome extension.")
+![alt](res/GUI.PNG "The interface for the Chrome extension.")
 
 #### Structure
 This project in primarily a google chrome extension written in Javascript and a little bit of CSS. 
