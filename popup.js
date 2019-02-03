@@ -7,14 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
-            chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
-                setCount)
+            //chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, setCount);
 
 			// add input to storage
             chrome.storage.sync.get('keyword', function(data) {
                 keyword = data.keyword;
                 keyword.push(inputText);
                 console.log(keyword);
+                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, setCount);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
             updateList(inputText);
