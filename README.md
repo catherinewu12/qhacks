@@ -1,5 +1,5 @@
 # QHacks 2019
-## Chrome Extension Project : Spoilers No Spoiling!
+## Chrome Extension Project : Spoiler No Spoiling!
 ###### By Brian Arthur, Jacob Laframboise, Catherine Wu, Emily Zhao
 
 #### Description
