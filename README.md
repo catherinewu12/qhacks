@@ -2,7 +2,7 @@
 ## Chrome Extension Project : Spoilers No Spoiling!
 ###### By Brian Arthur, Jacob Laframboise, Catherine Wu, Emily Zhao
 
-### Description
+#### Description
 This extension prompts and accepts user input to prevent spoilers from appearing on webpages while on Chrome.
 
 #### Installation
@@ -10,7 +10,8 @@ Download the qhacks folder. Go to "More Tools" --> "Extensions". Load unpacked a
 Now in a new webpage, there should be an icon prompt which allows input of a movie name. After hitting [Enter], 
 all instances of spoilers for that movie should be hidden from your internet adventures!
 
-GUI: ![Alt](res/GUI.PNG "The interface for the Chrome extension.")
+#### GUI: 
+![Alt](res/GUI.PNG "The interface for the Chrome extension.")
 
 #### Structure
 This project in primarily a google chrome extension written in Javascript and a little bit of CSS. 
