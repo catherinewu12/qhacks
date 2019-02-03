@@ -16,12 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(keyword);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
-
-			//send the input string to the content.js 
-			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, 
-				setCount)
 		})
 	}
+
+	//send the input string to the content.js 
+	//chrome.runtime.sendMessage({inputText: keyword[0]}, setCount)
 
 	function setCount(res) {
 		const div = document.createElement('div')
