@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	async function onclick() {
 		chrome.tabs.query({currentWindow: true, active: true}, async function(tabs) {
 			//get the string value of the input
-			let x = document.getElementById("movie")
-			let inputText = x.value
+			let inputText = $('#movie').val();
             //chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, setCount);
 
             let link = await getImdbLink(inputText);
@@ -26,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			updateList(spoilList);
 			blockSpoilers(spoilList);
 			saveStorage();
+			$('#movie').val('');
 		})
 	}
 

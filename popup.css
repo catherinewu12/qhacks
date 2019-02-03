@@ -3,22 +3,25 @@
     width: 500px;
 }
 
-#right {
-    width: 50%;
+.column {
+    height: 300px;
+    width: 245px;
     position: fixed;
-    left: 50%;
-    top: 0px;
+    top: 10px;
+}
+
+#right {
+    right: 10px;
 }
 
 #left {
-    width: 50%;
-    position: fixed;
-    top: 0px;
+    left: 10px;
 }
 
 #keyword_list {
     position: fixed;
     left: 30px;
+    overflow: auto;
 }
 
 .currentBlock {
@@ -32,4 +35,38 @@
     color: red;
     text-decoration: line-through;
     font-size: 20px;
+}
+
+body {
+	margin: 10px;
+	background-color: #99ccff
+}
+h1 {
+    font-size: 45px;
+    text-align: center;
+    font-family:Impact, Charcoal, sans-serif;
+    color: rgb(22,44,55);
+    }
+h2 {
+    font-size: 20px;
+    text-align: center;
+    font-family:Arial;
+    color: rgb(250,0,0);
+}
+h3 {
+    font-size: 20px;
+    text-align: center;
+    font-family:Arial;
+    color: rgb(250);
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #000000;
+    margin: 1em 0;
+    padding: 0;
+}
+img {
+    text-align: center;
 }
