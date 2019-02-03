@@ -1,6 +1,7 @@
 var keyword_list = document.getElementById("keyword_list");
 var spoilList;
 
+//retrieve from storage
 chrome.storage.sync.get('keyword', function(data) {
         spoilList = data.keyword;
         updateList(spoilList);
@@ -16,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
+            // won't add duplicates
+            for (let i=0; i<spoilList.length;i++){
+                if (spoilList[i]==inputText)
+                    return;
+            }
             //chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, setCount);
 
             let link = await getImdbLink(inputText);
