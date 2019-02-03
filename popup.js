@@ -1,3 +1,5 @@
+var spoilList;
+
 document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('button').addEventListener('click', onclick, false);
 
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 keyword = (data.keyword).concat(characters);
                 keyword.push(inputText);
                 console.log(keyword);
-                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, setCount);
+                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, function(){});
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
 			updateList(inputText);
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // console.log("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast")
             // console.log("Characters: ")
             // console.log(characters)
-			//send the input string to the content.js 
+			//send the input string to the content.js
 			//chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
 				//setCount)
 		})
@@ -100,3 +102,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 }, false)
+
+// FUNCTIONS
+getStorage() {
+    chrome.storage.sync.get('keyword', function(data) {
+        spoilList = data.keyword;
+    });
+}
+
+saveStorage() {
+    chrome.storage.sync.set({keyword: spoilList}, function() {});
+}
+
+blockSpoilers() {
+    chrome.tabs.getCurrent(function(tabs) {
+        chrome.tabs.sendMessage(tabs, {method: "blockSpoilers", inputText: spoilList}, setCount);
+    });
+}
