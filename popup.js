@@ -104,17 +104,17 @@ document.addEventListener('DOMContentLoaded', function() {
 }, false)
 
 // FUNCTIONS
-getStorage() {
+function getStorage() {
     chrome.storage.sync.get('keyword', function(data) {
         spoilList = data.keyword;
     });
 }
 
-saveStorage() {
+function saveStorage() {
     chrome.storage.sync.set({keyword: spoilList}, function() {});
 }
 
-blockSpoilers() {
+function blockSpoilers() {
     chrome.tabs.getCurrent(function(tabs) {
         chrome.tabs.sendMessage(tabs, {method: "blockSpoilers", inputText: spoilList}, setCount);
     });
