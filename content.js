@@ -28,7 +28,7 @@ function blockSpoilers(list) {
     var searchString = '';
 	list.forEach(function (item) {
 	    //making a string for paragraphs that contain each spoiler
-	    searchString = searchString + "p:contains('" + item + "'), " + "header:contains('" + item + "'), ";
+	    searchString = searchString + "p:contains('" + item + "'), " + ":header:contains('" + item + "'), " + "a:contains('" + item + "'), ";
 	    console.log((searchString));
 	});
 	searchString = searchString.substring(0, searchString.length - 2);
