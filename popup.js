@@ -1,31 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('button').addEventListener('click', onclick, false);
 
-	function onclick() {
+	async function onclick() {
 		//const movie = document.getElementById('txt').value;
-		chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+		chrome.tabs.query({currentWindow: true, active: true}, async function(tabs) {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
             chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
                 setCount)
 
+            let link = await getImdbLink(inputText);
+            let characters = await getCharacters(link);
 			// add input to storage
             chrome.storage.sync.get('keyword', function(data) {
-                keyword = data.keyword;
+                keyword = (data.keyword).concat(characters);
                 keyword.push(inputText);
                 console.log(keyword);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
 			updateList(inputText);
-			link = getImdbLink(inputText);
-			//console.log(link)
-			characters = getCharacters("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast");
-			console.log("link var then hardcoded one:")
-            console.log(link)
-            console.log("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast")
-            console.log("Characters: ")
-            console.log(characters)
+
+			//chars = await loadLinkAndChars(inputText)
+            //console.log(chars)
+
+            // console.log(link)
+            //
+            // console.log("link var then hardcoded one:")
+            // console.log(link)
+            // console.log("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast")
+            // console.log("Characters: ")
+            // console.log(characters)
 			//send the input string to the content.js 
 			//chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
 				//setCount)
@@ -47,29 +52,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	async function getImdbLink(keyWords){
 
-	    link = await lib.jlaframboise.searchtermstoimdblink['@dev']({url: keyWords, queries:[["cite", "text"]]}, (err, result) => {
-	        //handle result
-            console.log("Got link from server?");
-            console.log(result);
-            return result;
-        })
+	    let link = await lib.jlaframboise.searchtermstoimdblink['@dev']({url: keyWords, queries:[["cite", "text"]]});
+
         return link
     }
 
     async function getCharacters(url){
 	    //https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast
 
-	    characters = await lib.jlaframboise.scrapechars['@dev']({url: url, queries:[[".character", "text"]]}, (err, result) => {
-	        //if (err)
-	            //console.log(err.info)
-	        //console.log("Got characterList from server?");
-            //console.log(result);
-            return result;
-        });
+	    let characters = await lib.jlaframboise.scrapechars['@dev']({url: url, queries:[[".character", "text"]]});
+
         return characters
     }
-
-
 
 
     // Add stored list of keywords to popup.html
