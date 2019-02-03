@@ -16,22 +16,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(keyword);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
+			getCharacters(inputText);
 
 			//send the input string to the content.js 
-			chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, function(res) {
-                const div = document.createElement('div');
-                let num = res.count;
-                div.textContent = `${num} occurrences`;
-                document.body.appendChild(div);
-                updateList(inputText);
-	        });
-	    });
+			//chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
+				//setCount)
+		})
 	}
+
+	function setCount(res) {
+		const div = document.createElement('div')
+		var check = res.count
+		if (check > 2){
+		div.textContent = `Spoilers Blocked!`
+		document.body.appendChild(div)
+	}
+	};
+
+
+	function getCharacters(keyWords){
+	    //keywordsForUrl = keyWords.replace(" ", "%20");
+	    //address = "https://jlaframboise.lib.id/searchtermstoimdblink@dev/?url="+keywordsForUrl+"&queries=%5B%5B%22cite%22%2C%20%22text%22%5D%5D"
+	    lib.jlaframboise.searchtermstoimdblink['@dev']({url: keyWords, queries:[["cite", "text"]]}, (err, result) => {
+	        //handle result
+            console.log("Got from server?");
+            console.log(result);
+            //chrome.tabs.sendMessage(tabs[0].id, result);
+        })
+    }
+
 
     // Add stored list of keywords to popup.html
 	var keyword_list = document.getElementById("keyword_list");
     function updateList(keyword) {
         let div = document.createElement('div');
+        div.textContent = keyword;
+        /*div.addEventListener('click', function() {});*/
         let text = document.createElement('p');
         text.textContent = keyword;
         text.classList.add('currentBlock');
