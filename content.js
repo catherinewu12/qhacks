@@ -4,7 +4,8 @@ chrome.runtime.onMessage.addListener(function (request) {
 	console.log(spoilerList);
 	var searchString = '';
 	spoilerList.forEach(function (item) {
-	    searchString = searchString + "p:contains('" + item + "'), ";
+		//making a string for paragraphs that contain each spoiler
+	    searchString = searchString + "p:contains('" + item + "'), " + "h1:contains('" + item + "'), "+ "h2:contains('" + item + "'), "+ "h3:contains('" + item + "'), ";
 	    console.log((searchString));
 	});
 	searchString = searchString.substring(0, searchString.length - 2);
