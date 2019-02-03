@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-	document.querySelector('button').addEventListener('click',
-		onclick, false)
+	document.querySelector('button').addEventListener('click', onclick, false);
 
 	function onclick() {
 		//const movie = document.getElementById('txt').value;
@@ -8,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
+            chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
+                setCount)
 
 			// add input to storage
             chrome.storage.sync.get('keyword', function(data) {
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(keyword);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
+			updateList(inputText);
 			link = getImdbLink(inputText);
 			//console.log(link)
 			characters = getCharacters("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast");
@@ -30,13 +32,16 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 	}
 
+	//send the input string to the content.js
+	//chrome.runtime.sendMessage({inputText: keyword[0]}, setCount)
+
 	function setCount(res) {
 		const div = document.createElement('div')
 		var check = res.count
 		if (check > 2){
-		div.textContent = `Spoilers Blocked!`
-		document.body.appendChild(div)
-	}
+		    div.textContent = `Spoilers Blocked!`
+		    document.body.appendChild(div)
+	    }
 	};
 
 
@@ -71,8 +76,26 @@ document.addEventListener('DOMContentLoaded', function() {
 	var keyword_list = document.getElementById("keyword_list");
     function updateList(keyword) {
         let div = document.createElement('div');
-        div.textContent = keyword;
-        /*div.addEventListener('click', function() {});*/
+        let text = document.createElement('p');
+        text.textContent = keyword;
+        text.classList.add('currentBlock');
+        div.appendChild(text);
+        div.addEventListener('click', function() {
+            let textRemove = this.textContent;
+            console.log(textRemove);
+            chrome.storage.sync.get('keyword', function(data) {
+                keyword = data.keyword;
+                for (let x = 0; x < keyword.length; x++){
+                    if (keyword[x] === textRemove) {
+                        keyword.splice(x, 1);
+                        break;
+                    }
+                }
+                console.log(keyword);
+                chrome.storage.sync.set({keyword: keyword}, function() {});
+            });
+            this.parentNode.removeChild(this);
+        });
         keyword_list.appendChild(div);
     }
     chrome.storage.sync.get('keyword', function(data) {
