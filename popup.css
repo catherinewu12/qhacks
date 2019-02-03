@@ -19,6 +19,8 @@
 }
 
 #keyword_list {
+    height: 215px;
+    width: 215px;
     position: fixed;
     left: 30px;
     overflow: auto;
