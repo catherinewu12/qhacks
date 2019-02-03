@@ -1,6 +1,6 @@
 # QHacks 2019
 ## Chrome Extension Project : Spoilers No Spoiling!
-#### By Brian Arthur, Jacob Laframboise, Catherine Wu, Emily Zhao
+# By Brian Arthur, Jacob Laframboise, Catherine Wu, Emily Zhao
 This extension accepts user input to prevent spoilers from appearing on webpages while on Chrome.
 
 #### Installation
