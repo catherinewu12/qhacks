@@ -39,7 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
 			$('#movie').val('');
 		})
 	}
-	}, false);
+
+	$("#clear").on('click', function () {
+        removeItem(spoilList);
+        spoilList = [];
+        updateList(spoilList);
+        saveStorage();
+	});
+
+}, false);
 
 
 
@@ -93,7 +101,7 @@ function updateList(list) {
                     break;
                 }
             }
-            removeItem(textRemove);
+            removeItem([textRemove]);
             updateList(spoilList);
             blockSpoilers(spoilList);
             saveStorage();

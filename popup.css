@@ -39,6 +39,12 @@
     font-size: 20px;
 }
 
+#clear {
+    position: fixed;
+    bottom: 10px;
+    font-size: xx-small;
+}
+
 body {
 	margin: 10px;
 	background-color: #99ccff
@@ -71,4 +77,8 @@ hr {
 }
 img {
     text-align: center;
+}
+
+button {
+    border-radius: 5px;
 }

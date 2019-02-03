@@ -6,8 +6,13 @@ chrome.runtime.onMessage.addListener(function (request) {
     }
 })
 
-function removeItem(item) {
-    var searchString = 'p:contains(' + item + ')';
+function removeItem(list) {
+    var searchString = '';
+    list.forEach(function (item) {
+	    //making a string for paragraphs that contain each spoiler
+	    searchString = searchString + "p:contains('" + item + "'), " + ":header:contains('" + item + "'), " + "a:contains('" + item + "'), ";
+	});
+	searchString = searchString.substring(0, searchString.length - 2);
     $(searchString).css('-webkit-filter', '');
 }
 
@@ -17,10 +22,8 @@ function blockSpoilers(list) {
 	list.forEach(function (item) {
 	    //making a string for paragraphs that contain each spoiler
 	    searchString = searchString + "p:contains('" + item + "'), " + ":header:contains('" + item + "'), " + "a:contains('" + item + "'), ";
-	    console.log((searchString));
 	});
 	searchString = searchString.substring(0, searchString.length - 2);
-	console.log($(searchString));
 	$(searchString).css('-webkit-filter', 'blur(5px)');
 }
 
