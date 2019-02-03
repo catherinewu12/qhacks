@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			//get the string value of the input
 			let x = document.getElementById("movie")
 			let inputText = x.value
-            chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
-                setCount)
+            //chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText}, setCount);
 
             let link = await getImdbLink(inputText);
             let characters = await getCharacters(link);
@@ -17,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 keyword = (data.keyword).concat(characters);
                 keyword.push(inputText);
                 console.log(keyword);
+                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, setCount);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
 			updateList(inputText);

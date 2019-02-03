@@ -1,10 +1,24 @@
-chrome.runtime.onMessage.addListener(function (request, sender,
-	sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
+spoilerList = request.inputText;
+console.log(spoilerList)
+var searchString = '';
+spoilerList.forEach(function (item) {
+    searchString = searchString + "p:contains('" + item + "'), ";
+    console.log((searchString));
+});
+searchString = searchString.substring(0, searchString.length - 2);
+console.log($(searchString));
+$(searchString).css('-webkit-filter', 'blur(5px)');
+
+/*
 	//receive the passed value from user input
-	const re = new RegExp(request.inputText,'gi')
-	const matches = document.documentElement.textContent.match(re)
-	
+	var re = new RegExp(request.inputText,'gi');
+	var matches = document.body.innerHTML.match(re);
+
+
+    console.log(body);
+	console.log(matches);
 
 	if (matches.length > 2){
 		//change all major content tags into "CAT"
@@ -18,8 +32,10 @@ chrome.runtime.onMessage.addListener(function (request, sender,
 		for (var i=0; i<summary.length; i++) {
 			summary[i].innerHTML = 'SPOILERS'
 		}
-		
-	sendResponse({count: matches.length})	
-}
 
+	sendResponse({count: matches.length});
+}
+*/
+
+sendResponse({count: 0});
 })
