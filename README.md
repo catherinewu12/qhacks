@@ -17,6 +17,11 @@ instances of text spoilers for that movie should be hidden from your online adve
 This project in primarily a Google Chrome extension written in Javascript and a little bit of CSS. 
 It relies upon two custom Javascript API's which interact with the movie database site. 
 
+#### The Standard Library API's
+The two API's created and used are found on Standard Library at:
+1. jlaframboise/scrapechars
+2. jlaframboise/search-terms-to-imdb-link
+
 #### User Experience and Program Flow
 1. The user opens their browser and clicks our extension.
 2. They type in the name of the movie that they don't want spoiled. 
