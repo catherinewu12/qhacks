@@ -36,7 +36,22 @@ document.addEventListener('DOMContentLoaded', function() {
         text.textContent = keyword;
         text.classList.add('currentBlock');
         div.appendChild(text);
-        /*div.addEventListener('click', function() {});*/
+        div.addEventListener('click', function() {
+            let textRemove = this.textContent;
+            console.log(textRemove);
+            chrome.storage.sync.get('keyword', function(data) {
+                keyword = data.keyword;
+                for (let x = 0; x < keyword.length; x++){
+                    if (keyword[x] === textRemove) {
+                        keyword.splice(x, 1);
+                        break;
+                    }
+                }
+                console.log(keyword);
+                chrome.storage.sync.set({keyword: keyword}, function() {});
+            });
+            this.parentNode.removeChild(this);
+        });
         keyword_list.appendChild(div);
     }
     chrome.storage.sync.get('keyword', function(data) {
