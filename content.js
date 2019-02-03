@@ -29,6 +29,5 @@ function blockSpoilers(list) {
 
 chrome.storage.sync.get('keyword', function(data) {
         spoilerList = data.keyword;
-        console.log(spoilerList);
         blockSpoilers(spoilerList);
 });
