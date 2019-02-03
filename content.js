@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener(function (request) {
 
 	spoilerList = request.inputText;
-	console.log(spoilerList)
+	console.log(spoilerList);
 	var searchString = '';
 	spoilerList.forEach(function (item) {
 	    searchString = searchString + "p:contains('" + item + "'), ";

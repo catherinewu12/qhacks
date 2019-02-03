@@ -1,10 +1,17 @@
+var keyword_list = document.getElementById("keyword_list");
 var spoilList;
+
+chrome.storage.sync.get('keyword', function(data) {
+        spoilList = data.keyword;
+        updateList(spoilList);
+        blockSpoilers(spoilList);
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('button').addEventListener('click', onclick, false);
 
 	async function onclick() {
-		//const movie = document.getElementById('txt').value;
 		chrome.tabs.query({currentWindow: true, active: true}, async function(tabs) {
 			//get the string value of the input
 			let x = document.getElementById("movie")
@@ -13,44 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let link = await getImdbLink(inputText);
             let characters = await getCharacters(link);
-			// add input to storage
-            chrome.storage.sync.get('keyword', function(data) {
-                keyword = (data.keyword).concat(characters);
-                keyword.push(inputText);
-                console.log(keyword);
-                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, function(){});
-                chrome.storage.sync.set({keyword: keyword}, function() {});
-            });
-			updateList(inputText);
 
-			//chars = await loadLinkAndChars(inputText)
-            //console.log(chars)
-
-            // console.log(link)
-            //
-            // console.log("link var then hardcoded one:")
-            // console.log(link)
-            // console.log("https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast")
-            // console.log("Characters: ")
-            // console.log(characters)
-			//send the input string to the content.js
-			//chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
-				//setCount)
+			spoilList.push(inputText);
+			spoilList = spoilList.concat(characters);
+			updateList(spoilList);
+			blockSpoilers(spoilList);
+			saveStorage();
 		})
 	}
-
-	//send the input string to the content.js
-	//chrome.runtime.sendMessage({inputText: keyword[0]}, setCount)
-
-	function setCount(res) {
-		const div = document.createElement('div')
-		var check = res.count
-		if (check > 2){
-		    div.textContent = `Spoilers Blocked!`
-		    document.body.appendChild(div)
-	    }
-	};
-
 
 	async function getImdbLink(keyWords){
 
@@ -67,55 +44,39 @@ document.addEventListener('DOMContentLoaded', function() {
         return characters
     }
 
+}, false)
 
-    // Add stored list of keywords to popup.html
-	var keyword_list = document.getElementById("keyword_list");
-    function updateList(keyword) {
+// FUNCTIONS
+function saveStorage() {
+    chrome.storage.sync.set({keyword: spoilList}, function() {});
+}
+
+function blockSpoilers(list) {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {method: "blockSpoilers", inputText: list}, function () {});
+    });
+}
+
+function updateList(list) {
+    $(keyword_list).empty();
+    for (let x = 0; x < list.length; x++) {
         let div = document.createElement('div');
         let text = document.createElement('p');
-        text.textContent = keyword;
+        text.textContent = list[x];
         text.classList.add('currentBlock');
         div.appendChild(text);
         div.addEventListener('click', function() {
             let textRemove = this.textContent;
-            console.log(textRemove);
-            chrome.storage.sync.get('keyword', function(data) {
-                keyword = data.keyword;
-                for (let x = 0; x < keyword.length; x++){
-                    if (keyword[x] === textRemove) {
-                        keyword.splice(x, 1);
-                        break;
-                    }
+            for (let x = 0; x < spoilList.length; x++){
+                if (spoilList[x] === textRemove) {
+                    spoilList.splice(x, 1);
+                    break;
                 }
-                console.log(keyword);
-                chrome.storage.sync.set({keyword: keyword}, function() {});
-            });
-            this.parentNode.removeChild(this);
+            }
+            updateList(spoilList);
+            blockSpoilers(spoilList);
+            saveStorage();
         });
         keyword_list.appendChild(div);
     }
-    chrome.storage.sync.get('keyword', function(data) {
-        keyword = data.keyword;
-        for (var x = 0; x < keyword.length; x++){
-            updateList(keyword[x]);
-        }
-    });
-
-}, false)
-
-// FUNCTIONS
-getStorage() {
-    chrome.storage.sync.get('keyword', function(data) {
-        spoilList = data.keyword;
-    });
-}
-
-saveStorage() {
-    chrome.storage.sync.set({keyword: spoilList}, function() {});
-}
-
-blockSpoilers() {
-    chrome.tabs.getCurrent(function(tabs) {
-        chrome.tabs.sendMessage(tabs, {method: "blockSpoilers", inputText: spoilList}, setCount);
-    });
 }
