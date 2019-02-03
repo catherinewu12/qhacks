@@ -57,6 +57,12 @@ function blockSpoilers(list) {
     });
 }
 
+function removeItem(item) {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {method: "removeItem", inputText: item}, function () {});
+    });
+}
+
 function updateList(list) {
     $(keyword_list).empty();
     for (let x = 0; x < list.length; x++) {
@@ -73,6 +79,7 @@ function updateList(list) {
                     break;
                 }
             }
+            removeItem(textRemove);
             updateList(spoilList);
             blockSpoilers(spoilList);
             saveStorage();
