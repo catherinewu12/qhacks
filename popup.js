@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-	document.querySelector('button').addEventListener('click',
-		onclick, false)
+	document.querySelector('button').addEventListener('click', onclick, false);
 
 	function onclick() {
 		//const movie = document.getElementById('txt').value;
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(keyword);
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
-
+            updateList(inputText);
 			getCharacters(inputText);
 
 			//send the input string to the content.js 
@@ -34,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		const div = document.createElement('div')
 		var check = res.count
 		if (check > 2){
-		div.textContent = `Spoilers Blocked!`
-		document.body.appendChild(div)
-	}
+		    div.textContent = `Spoilers Blocked!`
+		    document.body.appendChild(div)
+	    }
 	};
 
 
@@ -56,8 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	var keyword_list = document.getElementById("keyword_list");
     function updateList(keyword) {
         let div = document.createElement('div');
-        div.textContent = keyword;
-        /*div.addEventListener('click', function() {});*/
         let text = document.createElement('p');
         text.textContent = keyword;
         text.classList.add('currentBlock');
