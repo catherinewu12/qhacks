@@ -13,10 +13,10 @@ chrome.runtime.onMessage.addListener(function (request, sender,
 		var content = document.getElementsByTagName("meta")
 		
 		for (var i=0; i<tags.length; i++) {
-			tags[i].innerHTML = 'CAT'
+			tags[i].innerHTML = 'SPOILERS'
 		}
 		for (var i=0; i<summary.length; i++) {
-			summary[i].innerHTML = 'CAT'
+			summary[i].innerHTML = 'SPOILERS'
 		}
 		
 	sendResponse({count: matches.length})	
