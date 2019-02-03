@@ -1,3 +1,0 @@
-# qhacks
-# print('hello world')
-
