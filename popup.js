@@ -14,30 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 keyword = data.keyword;
                 keyword.push(inputText);
                 console.log(keyword);
-                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, setCount);
+                chrome.tabs.sendMessage(tabs[0].id, {inputText: keyword}, function(){});
                 chrome.storage.sync.set({keyword: keyword}, function() {});
             });
             updateList(inputText);
 			getCharacters(inputText);
 
-			//send the input string to the content.js 
-			//chrome.tabs.sendMessage(tabs[0].id, {inputText: inputText},
-				//setCount)
 		})
 	}
-
-	//send the input string to the content.js 
-	//chrome.runtime.sendMessage({inputText: keyword[0]}, setCount)
-
-	function setCount(res) {
-		const div = document.createElement('div')
-		var check = res.count
-		if (check > 2){
-		    div.textContent = `Spoilers Blocked!`
-		    document.body.appendChild(div)
-	    }
-	};
-
 
 	function getCharacters(keyWords){
 	    //keywordsForUrl = keyWords.replace(" ", "%20");
