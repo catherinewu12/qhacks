@@ -8,10 +8,12 @@ chrome.storage.sync.get('keyword', function(data) {
         blockSpoilers(spoilList);
 });
 
-
+//listen for load events and button clicks
 document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('button').addEventListener('click', onclick, false);
 
+	// A function to run when the 'block' button is clicked. It will go through
+    // the process to use apis to get a list of characters and block their occurrences.
 	async function onclick() {
 		chrome.tabs.query({currentWindow: true, active: true}, async function(tabs) {
 			//get the string value of the input
@@ -24,9 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
             }
 
+            // call apis from stdlib to get the link to imdb then get the list of characters from there.
             let link = await getImdbLink(inputText);
             let characters = await getCharacters(link);
 
+            // update spoilers list, block the new spoilers
 			spoilList.push(inputText);
 			spoilList = spoilList.concat(characters);
 			updateList(spoilList);
@@ -35,25 +39,27 @@ document.addEventListener('DOMContentLoaded', function() {
 			$('#movie').val('');
 		})
 	}
+	}, false);
 
+
+
+// FUNCTIONS
+
+// a function to do the api call to get a link via keywords
 	async function getImdbLink(keyWords){
 
 	    let link = await lib.jlaframboise.searchtermstoimdblink['@dev']({url: keyWords, queries:[["cite", "text"]]});
-
         return link
     }
 
+    // a function to do the api call to get the characters list from a link
     async function getCharacters(url){
 	    //https://www.imdb.com/title/tt0076759/fullcredits?ref_=tt_cl_sm#cast
 
 	    let characters = await lib.jlaframboise.scrapechars['@dev']({url: url, queries:[[".character", "text"]]});
-
         return characters
     }
 
-}, false)
-
-// FUNCTIONS
 function saveStorage() {
     chrome.storage.sync.set({keyword: spoilList}, function() {});
 }
@@ -70,6 +76,7 @@ function removeItem(item) {
     });
 }
 
+// a function to update the list of blocked words on the GUI.
 function updateList(list) {
     $(keyword_list).empty();
     for (let x = 0; x < list.length; x++) {
